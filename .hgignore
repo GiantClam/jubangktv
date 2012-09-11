@@ -1,0 +1,15 @@
+syntax: glob
+Debug/*.*
+*.ncb
+*.suo
+*.vcproj.*
+*.MOV
+codecs/*
+¸´¼þ*
+mplayer/*
+phonon_backend/*
+phonon_mplayer/*
+image/skin1/?.png
+*.obj
+*.htm
+debug/*
