@@ -107,7 +107,7 @@ void StarItemSceneParameter::displaySong()
 void StarItemSceneParameter::updateScene(const QString &_sqlStr)
 {
 	itemsManager->setDefaultItemsPos();
-	(void)addItemsFromDatabase(_sqlStr, itemsManager->getCurPageIndex());
+	(void)addItemsFromDatabase(_sqlStr, itemsManager->getPrePageIndex());
 	itemsManager->scrollToNextPage();
 
 	int viewWidth = 1100;
@@ -136,7 +136,7 @@ bool StarItemSceneParameter::prepareNext()
 
 bool StarItemSceneParameter::prepareLast()
 {
-	R_ASSERT(!(addItemsFromDatabase(defaultItemsSQLStr, itemsManager->getCurPageIndex() - 2)), false);
+	R_ASSERT(!(addItemsFromDatabase(defaultItemsSQLStr, itemsManager->getPrePageIndex() - 2)), false);
 
 	itemsManager->prepareLastPageItemsPos();
 

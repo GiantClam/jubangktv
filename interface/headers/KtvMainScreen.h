@@ -7,10 +7,7 @@
 #include "../sources/MainWindowTopWidget.h"
 #include "../sources/MainWindowBottomWidget.h"
 #include "../headers/MainWindowView.h"
-
-#ifndef WIN32
-#include "../../player/PlayScreen.h"
-#endif
+#include "../sources/MsgHandlerThread.h"
 
 #include <QtGui/QMainWindow>
 #include <QString>
@@ -39,9 +36,6 @@ private:
 	ButtonManager manager;
 	HomeSceneParameter *mainWindowParameter;
 	MainWindowView *mainWidget;
-
-#ifndef WIN32
-	PlayScreen playScreen;
-#endif
+    MsgHandlerThread msgHandlerThread;
 };
 #endif /* MAINSCREEN_H_ */

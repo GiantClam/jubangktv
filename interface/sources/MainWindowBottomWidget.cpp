@@ -99,13 +99,13 @@ void MainWindowBottomWidget::paintEvent(QPaintEvent *event)
 void MainWindowBottomWidget::volumnAdjust(int _volumn)
 {
 #ifndef WIN32
-	Audio_adjustVolumn((unsigned int)_volumn);
+//	Audio_adjustVolumn((unsigned int)_volumn);
 #endif
 }
 
 void MainWindowBottomWidget::Silent(){
 	static bool isMuteState = true;
-
+/*
 #ifndef WIN32
 	if (isMuteState)
 	{
@@ -118,6 +118,7 @@ void MainWindowBottomWidget::Silent(){
 		isMuteState = true;
 	}
 #endif
+*/
 }
 
 void MainWindowBottomWidget::OriginalVoice()
@@ -128,7 +129,7 @@ void MainWindowBottomWidget::OriginalVoice()
 void MainWindowBottomWidget::NextSong()
 {
 #ifndef WIN32
-	nextSong(0, 0);
+//	nextSong(0, 0);
 #endif
 }
 
@@ -140,14 +141,14 @@ void MainWindowBottomWidget::tuneUp()
 void MainWindowBottomWidget::replay()
 {
 #ifndef WIN32
-	ktv_replay();
+//	ktv_replay();
 #endif
 }
 
 void MainWindowBottomWidget::playOrPause()
 {
 	static bool isPlayState = true;
-
+/*
 #ifndef WIN32
 	if (isPlayState)
 	{
@@ -160,5 +161,6 @@ void MainWindowBottomWidget::playOrPause()
 		isPlayState = true;
 	}
 #endif
+*/
 }
 

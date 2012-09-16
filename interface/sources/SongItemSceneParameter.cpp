@@ -66,7 +66,7 @@ void SongItemSceneParameter::updateScene(const QString &_songQueryStr)
 
 	emitPageCountOfSongs(_songQueryStr);
 
-	queryItemsFromDatabase(_songQueryStr, itemsManager->getCurPageIndex());
+	queryItemsFromDatabase(_songQueryStr, itemsManager->getPrePageIndex());
 	/*itemsManager->scrollToNextPage();*/
 
 	int viewWidth = 1280;
@@ -80,6 +80,8 @@ void SongItemSceneParameter::updateScene(const QString &_songQueryStr)
 
 	/* update scene size */
 	scene->setSceneRect(scene->itemsBoundingRect());
+
+	scrollToDefaultPos();
 }
 
 void SongItemSceneParameter::displayAllItems()
@@ -99,16 +101,21 @@ void SongItemSceneParameter::addItemsFromDatabase(const QList<SongStruct> &songs
 	}
 }
 
-bool SongItemSceneParameter::queryItemsFromDatabase(const QString &_songQueryStr, int _pageIndex)
+bool SongItemSceneParameter::queryItemsFromDatabase(const QString &_songQueryStr, int _pageIndex, int _itemCount)
 {
 	R_ASSERT((_pageIndex >= 0) && (_pageIndex < maxPage), false);
 
 	songSqlitReader.setSQLQueryStr(_songQueryStr);
 	songSqlitReader.setPageIndex(_pageIndex);
-	songSqlitReader.setItemsOfOnePage(itemCount);
+	songSqlitReader.setItemsOfOnePage(_itemCount);
 	songSqlitReader.start();
 
 	return true;
+}
+
+bool SongItemSceneParameter::queryItemsFromDatabase(const QString &_songQueryStr, int _pageIndex)
+{
+	return queryItemsFromDatabase(_songQueryStr, _pageIndex, itemCount);
 }
 
 #if 0
@@ -154,7 +161,7 @@ bool SongItemSceneParameter::prepareNext()
 	R_ASSERT(queryItemsFromDatabase(defaultItemsSQLStr, itemsManager->getNextPageIndex()), false);
 
 	itemsManager->prepareNextPageItemsPos();
-
+	qDebug() << scene->itemsBoundingRect();
 	scene->setSceneRect(scene->itemsBoundingRect());
 
 	return true;
@@ -162,7 +169,7 @@ bool SongItemSceneParameter::prepareNext()
 
 bool SongItemSceneParameter::prepareLast()
 {
-	R_ASSERT(queryItemsFromDatabase(defaultItemsSQLStr, itemsManager->getCurPageIndex() - 2), false);
+	R_ASSERT(queryItemsFromDatabase(defaultItemsSQLStr, itemsManager->getPrePageIndex()), false);
 
 	itemsManager->prepareLastPageItemsPos();
 

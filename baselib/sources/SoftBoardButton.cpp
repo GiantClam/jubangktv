@@ -37,10 +37,8 @@ void SoftBoardButton::setShowPoint(const QPoint &_point)
 }
 
 void SoftBoardButton::paintEvent(QPaintEvent *enent){
-	printf("SoftBoardButton::paintEvent start!\n");
 	QPainter painter(this);
 	if(curImage->isNull()){
-		printf("SoftBoardButton::curImage is NULL!\n");
 		return;
 	}
 
@@ -49,7 +47,6 @@ void SoftBoardButton::paintEvent(QPaintEvent *enent){
 
 	painter.drawText(*buttonTextRect, Qt::AlignCenter, buttonText);
 
-	printf("SoftBoardButton::paintEvent end!\n");
 }
 
 void SoftBoardButton::mousePressEvent(QMouseEvent *event)

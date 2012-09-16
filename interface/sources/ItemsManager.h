@@ -19,7 +19,7 @@ public:
 	void prepareNextPageItemsPos();
 	void prepareLastPageItemsPos();
 	void initManager();
-	int getCurPageIndex();
+	int getPrePageIndex();
 	void scrollToNextPage();
 	QGraphicsWidget* getItem(int _index);
 	void setDefaultItemsPos();
@@ -28,6 +28,7 @@ public:
 private:
 	bool isItemsMovable();
 	void setNextItemsPos(float _startXCoordinate);
+	void setLastItemsPos(float _startXCoordinate);
 	
 
 private:

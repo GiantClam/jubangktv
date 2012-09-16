@@ -28,6 +28,7 @@ public:
 	bool prepareNext();
 	bool prepareLast();
 	bool queryItemsFromDatabase(const QString &_songQueryStr, int _pageIndex);
+	bool queryItemsFromDatabase(const QString &_songQueryStr, int _pageIndex, int _itemCount);
 
 private slots:
 	void addItemsFromDatabase(const QList<SongStruct> &songs);

@@ -23,8 +23,10 @@ void ItemScrollAnimation::forward()
 	V_ASSERT(animationIsStoped());
 
 	V_ASSERT(itemScene->prepareNext());
+	qDebug() << scrollBar->value();
+	qDebug() << scrollBar->maximum();
 	animation.setStartValue(scrollBar->value());
-	animation.setEndValue((scrollBar->value() + step) / step * step);
+	animation.setEndValue(scrollBar->value() + step);
 	animation.start();
 }
 
@@ -33,6 +35,7 @@ void ItemScrollAnimation::backward()
 	V_ASSERT(animationIsStoped());
 
 	V_ASSERT(itemScene->prepareLast());
+	qDebug() << scrollBar->value();
 	animation.setStartValue(scrollBar->value());
 	animation.setEndValue(scrollBar->value() - step);
 	animation.start();

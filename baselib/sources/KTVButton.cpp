@@ -23,7 +23,6 @@ void KTVButton::paintEvent(QPaintEvent *enent){
 	QPainter painter(this);
 	if(curImage->isNull())
 	{
-		printf("KTVButton::curImage is NULL!\n");
 		return;
 	}
 

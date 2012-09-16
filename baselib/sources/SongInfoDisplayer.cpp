@@ -33,11 +33,9 @@ void SongInfoDisplayer::setInfo(const SongStruct & _songInfo)
 }
 
 void SongInfoDisplayer::paintEvent(QPaintEvent *enent){
-	printf("SoftBoardButton::paintEvent start!\n");
 	QPainter painter(this);
 	if(backgroundImage.isNull())
 	{
-		printf("SongInfoDisplayer::backgroundImage is NULL!\n");
 		return;
 	}
 
@@ -49,7 +47,6 @@ void SongInfoDisplayer::paintEvent(QPaintEvent *enent){
 	painter.setPen(QPen(Qt::white, 10));	
 	painter.drawText(173, 110, song.SingerName);
 
-	printf("SoftBoardButton::paintEvent start!\n");
 
 }
 
@@ -58,5 +55,4 @@ void SongInfoDisplayer::mousePressEvent(QMouseEvent *event)
 	emit click();
 }
 
-#include "moc_SongItemDisplayer.cpp"
 

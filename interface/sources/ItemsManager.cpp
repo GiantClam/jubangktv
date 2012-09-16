@@ -3,6 +3,8 @@
 #include <QGraphicsWidget>
 #include "ItemSceneParameter.h"
 #include "ItemScreenGlobal.h"
+#include "AssertDefine.h"
+#include <QtDebug>
 
 const int DEFAULT_PAGE_NUM = 3;
 const float DEFAULT_SCENE_WIDTH = VIEW_WIDTH * DEFAULT_PAGE_NUM;
@@ -54,7 +56,7 @@ void ItemsManager::setDefaultItemsPos()
 	QRectF rect;
 
 	initManager();
-	curStarItemIndex = 0;
+	curStarItemIndex = itemCount;
 
 	for (int itemIndex = 0; itemIndex < itemCount * 3; itemIndex++)
 	{
@@ -72,34 +74,28 @@ void ItemsManager::setDefaultItemsPos()
 
 int ItemsManager::getNextPageIndex()
 {
-	return pageIndex + 1;
+	return pageIndex;
 }
 
 void ItemsManager::prepareNextPageItemsPos()
 {
+	setNextItemsPos(itemXCoordinate);
+	itemXCoordinate += VIEW_WIDTH;
 	pageIndex++;
-
-	if (isItemsMovable())
-	{
-		setNextItemsPos(itemXCoordinate);
-		itemXCoordinate += VIEW_WIDTH;
-	}
-
-	curStarItemIndex = (curStarItemIndex + itemCount) % (itemCount * 3);
 }
 
 bool ItemsManager::isItemsMovable()
 {
-	return (pageIndex < 3) ? false : true;
+	return pageIndex > 1;
 }
 
-void ItemsManager::setNextItemsPos(float _startXCoordinate)
+void ItemsManager::setLastItemsPos(float _startXCoordinate)
 {
 	int x = 0;
 	int y = 0;
 	QRectF rect;
 	QGraphicsItem *item;
-	int startItemsCount = (curStarItemIndex + itemCount) % (3 * itemCount);
+	int startItemsCount = ((pageIndex + 1) % 3) * itemCount;
 
 	for (int itemIndex = 0; itemIndex < itemCount; itemIndex++)
 	{
@@ -113,39 +109,62 @@ void ItemsManager::setNextItemsPos(float _startXCoordinate)
 	}
 }
 
+void ItemsManager::setNextItemsPos(float _startXCoordinate)
+{
+	int x = 0;
+	int y = 0;
+	QRectF rect;
+	QGraphicsItem *item;
+	int startItemsCount = ((pageIndex - 1) >= 0) ? (pageIndex - 1) : 2;
+	startItemsCount = (startItemsCount % 3) * itemCount;
+
+	for (int itemIndex = 0; itemIndex < itemCount; itemIndex++)
+	{
+		item = itemList->value(startItemsCount + itemIndex);
+		rect = item->boundingRect();
+
+		x = sceneParam->getColumnOffset(itemIndex);
+		y = sceneParam->getRowOffset(itemIndex);
+
+		item->setPos(_startXCoordinate + x * itemWidth, y * itemHeight);
+	}
+
+	scrollToNextPage();
+}
+
 void ItemsManager::initManager()
 {
-	pageIndex = 0;
+	pageIndex = 1;
 	itemXCoordinate = DEFAULT_SCENE_WIDTH;
 }
 
-int ItemsManager::getCurPageIndex()
+int ItemsManager::getPrePageIndex()
 {
-	return pageIndex;
+	return (pageIndex - 2) < 0 ? 0 : (pageIndex - 2);
 }
 
 void ItemsManager::scrollToNextPage()
 {
-	curStarItemIndex += itemCount;
+	curStarItemIndex = (curStarItemIndex + itemCount) %(itemCount * 3);
 }
 
 void ItemsManager::prepareLastPageItemsPos()
 {
+	//V_ASSERT(isItemsMovable());
+	qDebug() << itemXCoordinate;
+	setLastItemsPos(itemXCoordinate - VIEW_WIDTH * 4);
+	itemXCoordinate -= VIEW_WIDTH;
+	itemXCoordinate = itemXCoordinate < 0 ? 0 : itemXCoordinate;
+
 	pageIndex--;
 
-	if (isItemsMovable())
-	{
-		setNextItemsPos(itemXCoordinate - VIEW_WIDTH * 3);
-		itemXCoordinate -= VIEW_WIDTH;
-		itemXCoordinate = itemXCoordinate < 0 ? 0 : itemXCoordinate;
-	}
-
-	curStarItemIndex = (curStarItemIndex - itemCount);
-	curStarItemIndex = curStarItemIndex < 0 ? (itemCount * DEFAULT_PAGE_NUM + curStarItemIndex) : curStarItemIndex;
+	curStarItemIndex = curStarItemIndex - itemCount;
+	curStarItemIndex = curStarItemIndex < 0 ? 18 : curStarItemIndex;
 }
 
 QGraphicsWidget* ItemsManager::getItem(int _index)
 {
 	return itemList->value(curStarItemIndex + _index);
 }
+
 

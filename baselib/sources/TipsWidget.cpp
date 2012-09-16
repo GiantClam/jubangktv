@@ -23,11 +23,9 @@ void TipsWidget::setShowCoordinateInGlobal(const QPoint &_point)
 
 void TipsWidget::paintEvent(QPaintEvent *enent)
 {
-	printf("TipsWidget::paintEvent start!\n");
 
 	QPainter painter(this);
 	if(curImage.isNull()){
-		printf("TipsWidget::curImage is NULL!\n");
 		return;
 	}
 	
@@ -37,7 +35,6 @@ void TipsWidget::paintEvent(QPaintEvent *enent)
 	painter.setPen(QPen(Qt::white));
 	painter.drawText(curImage.rect(), Qt::AlignCenter, text);
 
-	printf("TipsWidget::paintEvent end!\n");
 }
 
 void TipsWidget::setText(const QString &_text)

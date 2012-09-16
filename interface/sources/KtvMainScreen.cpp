@@ -3,7 +3,6 @@
 #include "../../baselib/sources/ConfigParser.h"
 #include "HomeSceneParameter.h"
 #include "../../baselib/headers/GlobalData.h"
-
 #include <QStringList>
 #include <QPixmap>
 
@@ -12,7 +11,7 @@ const QString KTV_SCREEN_IMAGE_PATH = IMAGE_PATH_PREFIX + "Common/Template1.png"
 KtvMainScreen::KtvMainScreen(QWidget *parent) 
 : imagePath(IMAGE_PATH_PREFIX + "Common/Template1.png"), 
 #ifndef WIN32
-playScreen(this, Qt::FramelessWindowHint), 
+//playScreen(this, Qt::FramelessWindowHint), 
 #endif
 QMainWindow(parent,Qt::FramelessWindowHint)
 {
@@ -28,7 +27,7 @@ QMainWindow(parent,Qt::FramelessWindowHint)
 	mainWidget->setGeometry(50, 50, 1230, 600);
 
 	this->setGeometry(0,0,this->_p_image->width(),this->_p_image->height());
-
+    msgHandlerThread.start();
 }
 
 KtvMainScreen::~KtvMainScreen()

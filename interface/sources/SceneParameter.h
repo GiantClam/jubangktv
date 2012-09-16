@@ -10,8 +10,9 @@ struct SceneParameter : public QObject
 {
 	SceneParameter();
 	~SceneParameter();
-	void addToView(QGraphicsView* const _view) const;
+	void addToView(QGraphicsView* _view);
 	void clearItems() const;
+	void scrollToDefaultPos();
 
 public: 
 	virtual void displayAllItems() = 0;
@@ -22,6 +23,7 @@ protected:
 
 protected:
 	QGraphicsScene *scene;
+	QGraphicsView *displayView;
 };
 
 #endif

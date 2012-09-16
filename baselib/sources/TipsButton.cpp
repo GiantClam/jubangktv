@@ -18,7 +18,6 @@ TipsButton::~TipsButton(void)
 }
 
 void TipsButton::paintEvent(QPaintEvent *enent){
-	printf("TipsButton::paintEvent start!\n");
 
 	QPainter painter(this);
 	if(!curImage.isNull()){
@@ -30,7 +29,6 @@ void TipsButton::paintEvent(QPaintEvent *enent){
 		painter.drawText(/*geometry(), Qt::AlignCenter*/QPoint(width() / 2, height() / 2), buttonText);
 	}
 
-	printf("TipsButton::paintEvent end!\n");
 }
 
 void TipsButton::mousePressEvent(QMouseEvent *event)
